@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\envall\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\envall\\.nuget\\packages"
+    ]
+  }
+}
