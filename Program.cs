@@ -16,7 +16,7 @@ namespace EncrytionKeyVault
         static string  keyencrytion = "goNLTm4LJONI6b/Y25raZ25b+eLSxWlGqigrq4mHDRM=";
         static string ClientID, ClientSecret; ///needs to secure this info
 
-        static string keyVaultName = "encrytiontest";
+        static string keyVaultName = "**********";
         static string keyVaultUri = "https://" + keyVaultName + ".vault.azure.net";
         static string keyVaultKeyName = "myfavouritekey";
 
@@ -138,51 +138,7 @@ namespace EncrytionKeyVault
 
             return result.AccessToken;
         }
-         static async Task<string> EncryptStringAsync(CryptographyClient cryptoClient, string input)
-        {
-            byte[] inputAsByteArray = Encoding.UTF8.GetBytes(input);
-
-            EncryptResult encryptResult =  await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep, inputAsByteArray).ConfigureAwait(false);
-
-            return Convert.ToBase64String(encryptResult.Ciphertext);
-        }
-
-        static async Task<string> DecryptStringAsync(CryptographyClient cryptoClient, string input)
-        {
-            byte[] inputAsByteArray = Convert.FromBase64String(input);
-
-            DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep, inputAsByteArray).ConfigureAwait(false);
-
-            return Encoding.Default.GetString(decryptResult.Plaintext);
-        }
-
-        static async Task<string> KeyVaultDemo()
-        {
-            string keyVaultName = "encrytiontest";
-            string keyVaultUri = "https://" + keyVaultName + ".vault.azure.net";
-            string keyVaultKeyName = "myfavouritekey";
-            
-
-            //1.- generate a randon key and SQK 
-            // 2.- using randon key encryt file/s
-            //3.- 
-            string textToEncrypt = "StuffIDoNotWantYouToKnow";
-
-            var client = new KeyClient(new Uri(keyVaultUri), new InteractiveBrowserCredential());
-
-            await client.CreateRsaKeyAsync(new CreateRsaKeyOptions(keyVaultKeyName)).ConfigureAwait(false);
-
-            KeyVaultKey key = await client.GetKeyAsync(keyVaultKeyName).ConfigureAwait(false);
-
-            var cryptoClient = new CryptographyClient(key.Id, new InteractiveBrowserCredential());
-
-            string encryptedString = await EncryptStringAsync(cryptoClient, textToEncrypt).ConfigureAwait(false);
-
-            Console.WriteLine($"Encrypted string: {encryptedString}");
-//4.- upload encryted key to blob storage
-
-///  BATCH SERVERS
-
+        
 
             
             string decryptedString = await DecryptStringAsync(cryptoClient, encryptedString).ConfigureAwait(false);
